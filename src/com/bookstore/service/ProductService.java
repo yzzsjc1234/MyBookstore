@@ -73,13 +73,13 @@ public class ProductService {
 		}
 		return null;
 	}
-	//分页查询
-	public PageBean findBooksPage(int currentPage, int pageSize,String category) {
+	//根据类别分页查询
+	public PageBean findBooksPageByCategory(int currentPage, int pageSize,String category) {
 		
 		try {
-			int count  = productDao.count(category);//得到总记录数
+			int count  = productDao.countByCategory(category);//得到总记录数
 			int totalPage = (int)Math.ceil(count*1.0/pageSize); //求出总页数
-			List<Product> products= productDao.findBooks(currentPage,pageSize,category);
+			List<Product> products= productDao.findBooksByCategory(currentPage,pageSize,category);
 			
 			//把5个变量封装到PageBean中，做为返回值
 			PageBean pb = new PageBean();
@@ -108,7 +108,31 @@ public class ProductService {
 		return null;
 	}
 
-	
+	//根据名字模糊分页查询
+		public PageBean findBooksPageByName(int currentPage, int pageSize,String name) {
+			
+			try {
+				int count  = productDao.countByName(name);//得到总记录数
+				int totalPage = (int)Math.ceil(count*1.0/pageSize); //求出总页数
+				List<Product> products= productDao.findBooksByName(currentPage,pageSize,name);
+				
+				//把5个变量封装到PageBean中，做为返回值
+				PageBean pb = new PageBean();
+				pb.setProducts(products);
+				pb.setCount(count);
+				pb.setCurrentPage(currentPage);
+				pb.setPageSize(pageSize);
+				pb.setTotalPage(totalPage);
+				//在pageBean中添加属性，用于点击上一页或下一页时使用
+				pb.setName(name);
+				
+				return pb;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
 
 	
 	

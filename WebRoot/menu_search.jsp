@@ -99,7 +99,7 @@ window.onload = function(){
 		style="color:#FFFF00">全部商品目录</a>
 </div>
 <div id="divsearch">
-	<form action="${pageContext.request.contextPath}/findProductBySearch"
+	<form action="${pageContext.request.contextPath}/searchBooksByName"
 		method="post">
 		<table width="100%" border="0" cellspacing="0">
 			<tr>

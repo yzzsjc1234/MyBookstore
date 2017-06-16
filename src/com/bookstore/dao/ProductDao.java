@@ -142,7 +142,7 @@ public class ProductDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	public int count(String category) throws SQLException {
+	public int countByCategory(String category) throws SQLException {
 		QueryRunner qr = new QueryRunner(C3P0Util.getDataSource());
 		String sql ="select count(*) from products";
 		//如果category不是空，就把条件加上
@@ -160,7 +160,7 @@ public class ProductDao {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public List<Product> findBooks(int currentPage, int pageSize,String category) throws SQLException {
+	public List<Product> findBooksByCategory(int currentPage, int pageSize,String category) throws SQLException {
 		QueryRunner qr = new QueryRunner(C3P0Util.getDataSource());
 		
 		String sql = "select * from products where 1=1";
@@ -189,4 +189,45 @@ public class ProductDao {
 		return qr.query("select name from products where name like ?", new ColumnListHandler(),"%"+name+"%");
 	}
 	
+	
+	/**
+	 * 根据名字模糊查询得到总记录数
+	 * @return
+	 * @throws SQLException
+	 */
+	public int countByName(String name) throws SQLException {
+		QueryRunner qr = new QueryRunner(C3P0Util.getDataSource());
+		String sql ="select count(*) from products";
+		//如果name不是空，就把条件加上
+		if(!"".equals(name)){
+			sql+=" where name like '%"+name+"%'";
+		}
+		long l =  (Long)qr.query(sql, new ScalarHandler(1));
+		return (int)l;
+	}
+	
+	/**
+	 * 根据名字模糊查找分页数据
+	 * @param currentPage
+	 * @param pageSize
+	 * @return
+	 * @throws SQLException 
+	 */
+	public List<Product> findBooksByName(int currentPage, int pageSize,String name) throws SQLException {
+		QueryRunner qr = new QueryRunner(C3P0Util.getDataSource());
+		
+		String sql = "select * from products where 1=1";
+		List list = new ArrayList();
+		if(!"".equals(name)){
+			sql+=" and name like ?";
+			list.add("%"+name+"%");
+		}
+		sql+=" limit ?,?";
+		
+		// select * from products where 1=1 and category=? limit ?,?;
+		list.add((currentPage-1)*pageSize);
+		list.add(pageSize);
+		
+		return qr.query(sql, new BeanListHandler<Product>(Product.class),list.toArray());
+	}
 }

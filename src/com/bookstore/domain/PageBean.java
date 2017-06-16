@@ -9,8 +9,14 @@ public class PageBean {
 	private int totalPage;
 	private List<Product> products;
 	private String category;
+	private String name;
 	
-	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getCategory() {
 		return category;
 	}
