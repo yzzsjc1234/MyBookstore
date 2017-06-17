@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.bookstore.domain.User;
 import com.bookstore.exception.UserException;
 import com.bookstore.service.UserService;
+import com.bookstore.util.MD5Utils;
 
 public class UserServlet extends BaseServlet {
 
@@ -48,7 +49,7 @@ public class UserServlet extends BaseServlet {
 		//
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		
+		password = MD5Utils.md5(password);
 		UserService us = new UserService();
 		try {
 			String path="/index.jsp";
@@ -80,6 +81,8 @@ public class UserServlet extends BaseServlet {
 		try {
 			BeanUtils.populate(user, request.getParameterMap());
 			user.setActiveCode(UUID.randomUUID().toString());//手动设置激活码
+			String password = MD5Utils.md5(request.getParameter("password"));
+			user.setPassword(password);
 			//调用业务逻辑
 			UserService us = new UserService();
 			us.register(user);
