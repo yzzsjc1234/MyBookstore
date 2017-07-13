@@ -1,7 +1,7 @@
 # myBookstore
 This is a JavaEE web project based on B/S structure which implements major functions for both users and admins.
  
-MyBookstore is online bookstore(electronic commerce system) based on servlet/jsp and html/css/js. It can be divded into two parts: user end and admin end. User end contains functions such like register, lon in, buy books, add cart, query/edit orders, payment, etc. Meanwhile, admin end contains functions such like query members, query products, add products, etc.
+MyBookstore is online bookstore(electronic commerce system) based on servlet/jsp and html/css/js. It can be divided into two parts: user end and admin end. User end contains functions such like register, lon in, buy books, add cart, query/edit orders, payment, etc. Meanwhile, admin end contains functions such like query members, query products, add products, etc.
 ## 1. New user register and login
 The register and login modules contain password MD5 encoding and email activation. The filter module guide user and admin to different website from the same login page.
 
